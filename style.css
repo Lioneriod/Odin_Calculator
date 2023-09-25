@@ -1,0 +1,79 @@
+body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  padding: 0px;
+}
+
+.calc{
+  display: flex;
+  padding: 12px;
+  background-color: red;
+  border-radius: 15px;
+  max-height: 450px;
+  max-width: 400px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex: 1 1 initial;
+  justify-content: center;
+  gap: 16px;
+}
+
+.calc > .screen{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: aqua;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.calc > .pad_area{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1px;
+  padding: 4px;
+  background-color: blueviolet;
+}
+
+.calc > .pad_area > .left_side{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: aquamarine;
+}
+
+button{
+  min-width: 20px;
+  min-height: 20px;
+  font-weight: 800;
+  font-size: 16px;
+  color: #b68272;
+}
+
+.pad_area > .left_side > .options{
+  display: flex;
+  justify-content: center;
+}
+
+.pad_area > .right_side > .operators{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  background-color: #b68272; 
+}
+
+.pad_area > .left_side > .numbers{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  
+}
