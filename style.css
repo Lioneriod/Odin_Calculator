@@ -13,10 +13,9 @@ body{
 .calc{
   display: flex;
   padding: 12px;
-  background-color: red;
-  border-radius: 15px;
-  max-height: 450px;
-  max-width: 400px;
+  border-radius: 10px;
+  max-height: 550px;
+  max-width: 500px;
   flex-direction: column;
   flex-wrap: wrap;
   flex: 1 1 initial;
@@ -28,52 +27,66 @@ body{
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: aqua;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 8px;
 }
 
 .calc > .pad_area{
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 1px;
-  padding: 4px;
-  background-color: blueviolet;
-}
-
-.calc > .pad_area > .left_side{
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: aquamarine;
+  border-radius: 8px;
+  padding: 6px;
+  gap: 8px;
+}
+
+.column1,
+.column2,
+.column3,
+.column4{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-direction: column;
+  flex: 1 1 initial;
+}
+
+
+button{
+  display: flex;
+  flex: 1 1 initial;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  min-height: 40px;
+  border-radius: 100%;
+}
+
+/* Fonts */
+.screen{
+  font-size: 18px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
 }
 
 button{
-  min-width: 20px;
-  min-height: 20px;
-  font-weight: 800;
   font-size: 16px;
-  color: #b68272;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
 }
 
-.pad_area > .left_side > .options{
-  display: flex;
-  justify-content: center;
+/* Color Selector */
+.calc{
+  background-color: rgb(247, 180, 247);
 }
 
-.pad_area > .right_side > .operators{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; 
-  background-color: #b68272; 
+button{
+  background-color: #f08dbb;
+  color: rgb(252, 240, 250);
 }
 
-.pad_area > .left_side > .numbers{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  
+.pad_area,
+.screen{
+  background-color: rgb(247, 228, 247);
+  color: rgb(155, 100, 129);
 }
