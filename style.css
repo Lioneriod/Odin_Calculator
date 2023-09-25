@@ -60,18 +60,21 @@ button{
   width: 40px;
   min-height: 40px;
   border-radius: 100%;
+  border: 4px solid ;
+  box-shadow: 1px 1px 8px 0.5px rgba(0,0,0,0.28);
+
 }
 
 /* Fonts */
 .screen{
   font-size: 18px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Itim', 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 700;
 }
 
 button{
-  font-size: 16px;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: 17px;
+  font-family: 'Itim', 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 700;
 }
 
