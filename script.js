@@ -1,51 +1,140 @@
-function add(a, b) {
-  a = a + b;
-  return a;
-}
+// Plan how to tackle each problem in this exercise before doing it lol
 
-function subtract(a, b) {
-  a = a - b;
-  return a;
-}
+// The problem: Creating a script that will save a clicked number in a variable,
+// for further use in functions of different operations;
 
-function multiply(a, b) {
-  a = a * b;
-  return a;
-}
+// The plan: Connect different divs with variables and events, so that each click
+// will save that number in a variable. After picking the operator and the
+// second number and pressing the equal operator, the first variable should be
+// overwritten, showing the result;
 
-function divide(a, b) {
-  a = a / b;
-  return a;
-}
+// The Pseudocode:
+// 1. User clicks, triggering and event with each possible button using the same function
+// 2. The first number chosen is attributed to a var, showing up on the screen
+// 3. The chosen operator is also attributed to a var, to make it possible for
+// different operations
+// 4. At last, the second number is attributed to a var
 
 const buttons = {
-  comma: document.querySelector("#comma").innerHTML,
-  point: document.querySelector("#point").innerHTML,
-  zero: document.querySelector("#zero").innerHTML,
-  one: document.querySelector("#one").innerHTML,
-  two: document.querySelector("#two").innerHTML,
-  three: document.querySelector("#three").innerHTML,
-  four: document.querySelector("#four").innerHTML,
-  five: document.querySelector("#five").innerHTML,
-  six: document.querySelector("#six").innerHTML,
-  seven: document.querySelector("#seven").innerHTML,
-  eight: document.querySelector("#eight").innerHTML,
-  nine: document.querySelector("#nine").innerHTML,
-  C: document.querySelector("#C").innerHTML,
-  CE: document.querySelector("#CE").innerHTML,
-  smile: document.querySelector("#smile").innerHTML,
-  divider: document.querySelector("#divide").innerHTML,
-  adder: document.querySelector("#add").innerHTML,
-  subtracter: document.querySelector("#subtract").innerHTML,
-  multiplier: document.querySelector("#multiply").innerHTML,
-  equaler: document.querySelector("#equal").innerHTML,
+  comma: document.querySelector(".comma"),
+  point: document.querySelector(".point"),
+  zero: document.querySelector(".zero"),
+  one: document.querySelector(".one"),
+  two: document.querySelector(".two"),
+  three: document.querySelector(".three"),
+  four: document.querySelector(".four"),
+  five: document.querySelector(".five"),
+  six: document.querySelector(".six"),
+  seven: document.querySelector(".seven"),
+  eight: document.querySelector(".eight"),
+  nine: document.querySelector(".nine"),
+  C: document.querySelector(".C"),
+  CE: document.querySelector(".CE"),
+  smile: document.querySelector(".smile"),
+  divider: document.querySelector(".divide"),
+  adder: document.querySelector(".add"),
+  subtracter: document.querySelector(".subtract"),
+  multiplier: document.querySelector(".multiply"),
+  equaler: document.querySelector(".equal"),
 };
 
-function screen_control() {
-  let screen_result = 0;
-  document.querySelector(".result").innerHTML = screen_result;
+let firstNumber = "";
+let operator = "";
+let secondNumber = "";
+const operators = [
+  buttons.adder,
+  buttons.subtracter,
+  buttons.multiplier,
+  buttons.divider,
+];
+
+// Function to perform operations
+function operate(a, op, b) {
+  switch (op) {
+    case "+":
+      return a + b;
+    case "-":
+      return a - b;
+    case "*":
+      return a * b;
+    case "/":
+      return a / b;
+    default:
+      return NaN;
+  }
 }
 
-screen_control();
+// Function to be repeated to update the calculator display
+function updateDisplay(value) {
+  document.querySelector(".result").innerHTML = value;
+}
 
-// Plan how to tackle each problem in this exercise before doing it lol
+function calculator() {
+  for (let operatorButton of [
+    buttons.adder,
+    buttons.subtracter,
+    buttons.multiplier,
+    buttons.divider,
+  ]) {
+    operatorButton.addEventListener("click", () => {
+      if (firstNumber !== "") {
+        operator = operatorButton.textContent;
+      }
+    });
+  }
+  // Event listener for the equals (=) button
+  buttons.equaler.addEventListener("click", () => {
+    if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
+      firstNumber = String(
+        operate(parseFloat(firstNumber), operator, parseFloat(secondNumber))
+      );
+      operator = "";
+      secondNumber = "";
+      updateDisplay(firstNumber);
+    }
+  });
+  // Event listener for the point (.) button
+  buttons.point.addEventListener("click", () => {
+    if (operator === "") {
+      if (!firstNumber.includes(".") && firstNumber !== "") {
+        firstNumber += ".";
+        updateDisplay(firstNumber);
+      }
+    } else {
+      if (!secondNumber.includes(".") && secondNumber !== "") {
+        secondNumber += ".";
+        updateDisplay(secondNumber);
+      }
+    }
+  });
+  // Event listeners for number buttons
+  for (let button of Object.values(buttons)) {
+    if (button.classList.contains("number")) {
+      button.addEventListener("click", () => {
+        if (operator === "") {
+          firstNumber += button.textContent;
+          updateDisplay(firstNumber);
+        } else {
+          secondNumber += button.textContent;
+          updateDisplay(secondNumber);
+        }
+      });
+    }
+  }
+  // Event listener for the CE button
+  buttons.CE.addEventListener("click", () => {
+    firstNumber = "";
+    operator = "";
+    secondNumber = "";
+    updateDisplay("0");
+  });
+  // Event listener for the smile button
+  buttons.smile.addEventListener("click", () => {
+    firstNumber = "";
+    operator = "";
+    secondNumber = "";
+    updateDisplay("=)");
+  });
+}
+
+calculator();
