@@ -70,57 +70,14 @@ function updateDisplay(value) {
 }
 
 function calculator() {
-  for (let operatorButton of [
-    buttons.adder,
-    buttons.subtracter,
-    buttons.multiplier,
-    buttons.divider,
-  ]) {
+  for (let operatorButton of operators) {
     operatorButton.addEventListener("click", () => {
       if (firstNumber !== "") {
         operator = operatorButton.textContent;
       }
     });
   }
-  // Event listener for the equals (=) button
-  buttons.equaler.addEventListener("click", () => {
-    if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
-      firstNumber = String(
-        operate(parseFloat(firstNumber), operator, parseFloat(secondNumber))
-      );
-      operator = "";
-      secondNumber = "";
-      updateDisplay(firstNumber);
-    }
-  });
-  // Event listener for the point (.) button
-  buttons.point.addEventListener("click", () => {
-    if (operator === "") {
-      if (!firstNumber.includes(".") && firstNumber !== "") {
-        firstNumber += ".";
-        updateDisplay(firstNumber);
-      }
-    } else {
-      if (!secondNumber.includes(".") && secondNumber !== "") {
-        secondNumber += ".";
-        updateDisplay(secondNumber);
-      }
-    }
-  });
-  // Event listeners for number buttons
-  for (let button of Object.values(buttons)) {
-    if (button.classList.contains("number")) {
-      button.addEventListener("click", () => {
-        if (operator === "") {
-          firstNumber += button.textContent;
-          updateDisplay(firstNumber);
-        } else {
-          secondNumber += button.textContent;
-          updateDisplay(secondNumber);
-        }
-      });
-    }
-  }
+
   // Event listener for the CE button
   buttons.CE.addEventListener("click", () => {
     firstNumber = "";
