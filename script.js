@@ -91,6 +91,7 @@ function updateDisplayExtra(value, value2) {
 
 // General function for all buttons
 function calculator() {
+  updateDisplay(0);
   // Using for of to add operators from the const before
   for (let operatorButton of operators) {
     operatorButton.addEventListener("click", () => {
@@ -132,20 +133,41 @@ function calculator() {
     secondNumber = "";
     operator = "";
   });
+
   // Now to work with floating point numbers
+  buttons.point.addEventListener("click", () => {
+    // For this condition, i'm gonna check if it includes a point
+    // To block future points right after
+    if (!firstNumber.includes(".")) {
+      firstNumber += buttons.point.textContent;
+      updateDisplay(firstNumber);
+    } else if (operator && !secondNumber.includes(".")) {
+      secondNumber += buttons.point.textContent;
+      updateDisplay(secondNumber);
+    }
+  });
 
   //For the extra buttons
   buttons.C.addEventListener("click", () => {
-    operator = "";
-    secondNumber = "";
-    updateDisplay(firstNumber);
+    if (!operator && !secondNumber) {
+      firstNumber = firstNumber.slice(0, -1);
+      updateDisplay(firstNumber);
+    } else if (operator !== 0 || secondNumber !== 0) {
+      operator = "";
+      secondNumber = "";
+      updateDisplay("ERROR");
+    } else {
+      updateDisplay("ERROR");
+    }
   });
+
   buttons.CE.addEventListener("click", () => {
     firstNumber = "";
     operator = "";
     secondNumber = "";
-    updateDisplay("");
+    updateDisplay(0);
   });
+
   buttons.smile.addEventListener("click", () => {
     firstNumber = "";
     operator = "";
