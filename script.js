@@ -16,7 +16,6 @@
 // 4. At last, the second number is attributed to a var
 
 const buttons = {
-  comma: document.querySelector(".comma"),
   point: document.querySelector(".point"),
   zero: document.querySelector(".zero"),
   one: document.querySelector(".one"),
@@ -41,6 +40,7 @@ const buttons = {
 let firstNumber = "";
 let operator = "";
 let secondNumber = "";
+
 const operators = [
   buttons.adder,
   buttons.subtracter,
@@ -48,8 +48,23 @@ const operators = [
   buttons.divider,
 ];
 
+const numbers = [
+  buttons.zero,
+  buttons.one,
+  buttons.two,
+  buttons.three,
+  buttons.four,
+  buttons.five,
+  buttons.six,
+  buttons.seven,
+  buttons.eight,
+  buttons.nine,
+];
+
 // Function to perform operations
 function operate(a, op, b) {
+  a = parseFloat(a);
+  b = parseFloat(b);
   switch (op) {
     case "+":
       return a + b;
@@ -60,32 +75,77 @@ function operate(a, op, b) {
     case "/":
       return a / b;
     default:
-      return NaN;
+      return "ERROR";
   }
 }
 
-// Function to be repeated to update the calculator display
+// Function to update the calculator display (which can be called for every change)
 function updateDisplay(value) {
   document.querySelector(".result").innerHTML = value;
 }
 
+// This one is used to show the result and the next operator to be used
+function updateDisplayExtra(value, value2) {
+  document.querySelector(".result").innerHTML = value + ` ${value2}`;
+}
+
+// General function for all buttons
 function calculator() {
+  // Using for of to add operators from the const before
   for (let operatorButton of operators) {
     operatorButton.addEventListener("click", () => {
-      if (firstNumber !== "") {
+      // Let's make the second operator press be also an equal + operator
+      if (firstNumber !== "" && secondNumber !== "" && operator !== "") {
+        firstNumber = operate(firstNumber, operator, secondNumber);
+        operator = "";
         operator = operatorButton.textContent;
+        updateDisplayExtra(firstNumber, operator);
+        secondNumber = "";
+
+        // This is the basic version for when you got at least one number pressed
+      } else if (firstNumber !== "" || secondNumber !== "") {
+        operator = operatorButton.textContent;
+        updateDisplay(operator);
+      }
+    });
+  }
+  // Using for of to add numbers
+  for (let numberButton of numbers) {
+    numberButton.addEventListener("click", () => {
+      // We do the first number for starting an operation
+      if (secondNumber == "" && operator == "") {
+        firstNumber += numberButton.textContent;
+        updateDisplay(firstNumber);
+        // Let's do the same for the second number, but with different rules
+      } else if (firstNumber !== "" && operator !== "") {
+        secondNumber += numberButton.textContent;
+        updateDisplay(secondNumber);
       }
     });
   }
 
-  // Event listener for the CE button
+  //Now to get the result, we are gonna use the function operate
+  buttons.equaler.addEventListener("click", () => {
+    firstNumber = operate(firstNumber, operator, secondNumber);
+    updateDisplay(firstNumber);
+    // To do new operations, we need to clear those numbers from before
+    secondNumber = "";
+    operator = "";
+  });
+  // Now to work with floating point numbers
+
+  //For the extra buttons
+  buttons.C.addEventListener("click", () => {
+    operator = "";
+    secondNumber = "";
+    updateDisplay(firstNumber);
+  });
   buttons.CE.addEventListener("click", () => {
     firstNumber = "";
     operator = "";
     secondNumber = "";
-    updateDisplay("0");
+    updateDisplay("");
   });
-  // Event listener for the smile button
   buttons.smile.addEventListener("click", () => {
     firstNumber = "";
     operator = "";
